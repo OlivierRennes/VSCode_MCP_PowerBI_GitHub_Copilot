@@ -1,0 +1,37 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: fr-FR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["SalesOrderDetail","Query","Org_OB_Hierarchy","Sheet1","Color Model","AdventureWorksSales","OtherSales","Ventes consolidées","Sales","Product","Sales_product"]
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table SalesOrderDetail
+ref table DateTableTemplate_4ed8e5a7-49de-453b-9131-b09be9b353de
+ref table LocalDateTable_4b2ab78a-fe09-42eb-bde0-72ff2988b3a7
+ref table Query
+ref table LocalDateTable_6d0c1205-6ad5-4ac6-b10b-8f9cdea57bf3
+ref table LocalDateTable_3a8f59c8-66de-4e9a-8761-99f352a3cfb5
+ref table LocalDateTable_9eebd657-e8dd-47ba-b4dd-9318e82c77ba
+ref table LocalDateTable_47154012-0ea6-40a4-9f3b-5b722a9d3176
+ref table LocalDateTable_a8a2a74f-3651-431a-b10e-5a7ce5bfdde3
+ref table Sheet1
+ref table LocalDateTable_b739702b-0833-456d-871a-fea944e43863
+ref table 'Color Model'
+ref table AdventureWorksSales
+ref table OtherSales
+ref table 'Ventes consolidées'
+ref table Sales
+ref table LocalDateTable_2e74884a-ee99-41d9-9f85-25c35085c4fd
+ref table Product
+ref table Sales_product
+ref table LocalDateTable_67534dbc-2a9d-4b90-ac8c-743d96648a96
+
+ref cultureInfo fr-FR
+

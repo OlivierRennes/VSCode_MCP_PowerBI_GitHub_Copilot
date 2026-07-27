@@ -1,0 +1,90 @@
+table Sales_product
+	lineageTag: a2c3d5fe-def6-4972-b9af-ec7535a599a8
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: bdccaca2-b311-444d-9deb-ca274c0c5e8e
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8abb1d5e-33b1-4289-b9b5-eb523f6cbc0b
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		variation Variation
+			isDefault
+			relationship: 73bbd734-2304-4136-9aaf-d44c90b2a8a3
+			defaultHierarchy: LocalDateTable_67534dbc-2a9d-4b90-ac8c-743d96648a96.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Product
+		dataType: string
+		lineageTag: f1b47643-afe5-41c8-91c9-d02d3816e0f6
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d6f0f36-73f7-4d02-bacf-b21d87333083
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Price'
+		dataType: double
+		lineageTag: fac70469-1dfe-40bf-807c-0adb8bd29686
+		summarizeBy: sum
+		sourceColumn: Unit Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sales
+		dataType: double
+		lineageTag: 9bac31b4-3705-465f-a0e8-0ac85b3efb9e
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Cost
+		dataType: double
+		lineageTag: 76f752f9-caa9-4180-b8c4-2e2a1b085dfd
+		summarizeBy: sum
+		sourceColumn: Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Sales_product = m
+		mode: import
+		source =
+				let
+				    Source = Table.NestedJoin(Sales, {"ProductKey"}, Product, {"ProductKey"}, "Product", JoinKind.LeftOuter),
+				    #"Product développé" = Table.ExpandTableColumn(Source, "Product", {"Product"}, {"Product.Product"}),
+				    #"Colonnes renommées" = Table.RenameColumns(#"Product développé",{{"Product.Product", "Product"}}),
+				    #"Colonnes permutées" = Table.ReorderColumns(#"Colonnes renommées",{"SalesOrderNumber", "OrderDate", "Product", "ProductKey", "ResellerKey", "EmployeeKey", "SalesTerritoryKey", "Quantity", "Unit Price", "Sales", "Cost"}),
+				    #"Colonnes supprimées" = Table.RemoveColumns(#"Colonnes permutées",{"ProductKey", "ResellerKey", "EmployeeKey", "SalesTerritoryKey"})
+				in
+				    #"Colonnes supprimées"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

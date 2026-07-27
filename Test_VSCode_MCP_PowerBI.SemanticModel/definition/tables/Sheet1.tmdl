@@ -1,0 +1,129 @@
+table Sheet1
+	lineageTag: 5e373bd6-9668-42cd-bd66-e884b9161541
+
+	column ' Product '
+		dataType: string
+		lineageTag: 9956c5ed-83ef-4baf-9708-7f223c2f0f9c
+		summarizeBy: none
+		sourceColumn: " Product "
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Discount Band '
+		dataType: string
+		lineageTag: 2ea2d340-4bae-409b-b3a8-e40d2ed1b70a
+		summarizeBy: none
+		sourceColumn: " Discount Band "
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Units Sold'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2753ede3-28de-48a8-9dc6-fb4affb1c68c
+		summarizeBy: sum
+		sourceColumn: Units Sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column ' Manufacturing Price '
+		dataType: double
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 33e186cf-26e1-45df-9368-94c4199fd39e
+		summarizeBy: sum
+		sourceColumn: " Manufacturing Price "
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ' Sale Price '
+		dataType: double
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: e0362987-69fa-4a1b-8a55-ef219d4c10c8
+		summarizeBy: sum
+		sourceColumn: " Sale Price "
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '  Sales '
+		dataType: double
+		lineageTag: e3daa02b-c456-4f6a-932a-70a28c65c60b
+		summarizeBy: sum
+		sourceColumn: "  Sales "
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ' Profit '
+		dataType: double
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 00ef22cd-fbd7-49e3-b05e-40f443d5cb55
+		summarizeBy: sum
+		sourceColumn: " Profit "
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7ab8ef11-a1b8-497d-be9f-3a3cb96ff0bd
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: e4d995a8-5ec3-412c-a3ef-00bfc5d3fb55
+			defaultHierarchy: LocalDateTable_b739702b-0833-456d-871a-fea944e43863.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 68aadf05-8fb9-4aa8-a956-b0665f3df05e
+		summarizeBy: sum
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sheet1 = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("C:\Téléchargements\Formation Power BI\SalesFile.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Sheet1", Kind = "Sheet"]}[Data],
+				  #"En-têtes promus" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Type de colonne changé" = Table.TransformColumnTypes(#"En-têtes promus", {{" Product ", type text}, {" Discount Band ", type text}, {"Units Sold", type text}, {" Manufacturing Price ", type text}, {" Sale Price ", type text}, {"  Sales ", type text}, {" Profit ", type text}, {"Date", type date}, {"Month Number", type text}}, "fr"),
+				    #"Valeur remplacée" = Table.ReplaceValue(#"Type de colonne changé",null,"0",Replacer.ReplaceValue,{"Units Sold"}),
+				    #"Valeur remplacée1" = Table.ReplaceValue(#"Valeur remplacée",null,"0",Replacer.ReplaceValue,{" Sale Price "}),
+				    #"Valeur remplacée2" = Table.ReplaceValue(#"Valeur remplacée1",null,"0",Replacer.ReplaceValue,{"  Sales "}),
+				    #"Valeur remplacée3" = Table.ReplaceValue(#"Valeur remplacée2",null,"0",Replacer.ReplaceValue,{" Profit "}),
+				    #"Valeur remplacée4" = Table.ReplaceValue(#"Valeur remplacée3",null,"0",Replacer.ReplaceValue,{" Manufacturing Price "}),
+				    #"Valeur remplacée5" = Table.ReplaceValue(#"Valeur remplacée4",".",",",Replacer.ReplaceText,{" Manufacturing Price "}),
+				    #"Type modifié" = Table.TransformColumnTypes(#"Valeur remplacée5",{{" Manufacturing Price ", type number}}),
+				    #"Valeur remplacée6" = Table.ReplaceValue(#"Type modifié",".",",",Replacer.ReplaceText,{" Sale Price "}),
+				    #"Type modifié1" = Table.TransformColumnTypes(#"Valeur remplacée6",{{" Sale Price ", type number}}),
+				    #"Valeur remplacée7" = Table.ReplaceValue(#"Type modifié1",".",",",Replacer.ReplaceText,{"  Sales ", " Profit "}),
+				    #"Type modifié2" = Table.TransformColumnTypes(#"Valeur remplacée7",{{"  Sales ", type number}, {" Profit ", type number}}),
+				    #"Valeur remplacée8" = Table.ReplaceValue(#"Type modifié2","1","Aucun",Replacer.ReplaceText,{" Discount Band "}),
+				    #"Valeur remplacée9" = Table.ReplaceValue(#"Valeur remplacée8","six hundred","600",Replacer.ReplaceText,{"Units Sold"}),
+				    #"Type modifié3" = Table.TransformColumnTypes(#"Valeur remplacée9",{{"Units Sold", Int64.Type}}),
+				    #"Valeur remplacée10" = Table.ReplaceValue(#"Type modifié3",null,#date(2023, 3, 3),Replacer.ReplaceValue,{"Date"}),
+				    #"Valeur remplacée11" = Table.ReplaceValue(#"Valeur remplacée10",".",",",Replacer.ReplaceText,{"Month Number"}),
+				    #"Type modifié4" = Table.TransformColumnTypes(#"Valeur remplacée11",{{"Month Number", Int64.Type}}),
+				    #"Doublons supprimés" = Table.Distinct(#"Type modifié4")
+				in
+				    #"Doublons supprimés"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

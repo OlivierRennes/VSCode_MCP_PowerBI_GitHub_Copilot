@@ -1,0 +1,15 @@
+expression Org_OB_Hierarchy =
+		let
+		  Source = PowerPlatform.Dataflows([]),
+		  #"Navigation 1" = Source{[Id = "Workspaces"]}[Data],
+		  #"Navigation 2" = #"Navigation 1"{[workspaceId = "79255a42-be89-4f07-b947-79fefbd58a42"]}[Data],
+		  #"Navigation 3" = #"Navigation 2"{[dataflowId = "1de380a0-86c2-4793-a2e2-46c73b3e4e1e"]}[Data],
+		  #"Navigation 4" = #"Navigation 3"{[entity = "Org_OB_Hierarchy", version = ""]}[Data]
+		in
+		  #"Navigation 4"
+	lineageTag: 1a196251-5188-4a74-882e-ab93c76154a7
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

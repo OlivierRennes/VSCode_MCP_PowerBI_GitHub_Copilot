@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Test_VSCode_MCP_PowerBI"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e383b6ef-d5e5-4d9a-a43f-fdb8ac136430"
+  }
+}

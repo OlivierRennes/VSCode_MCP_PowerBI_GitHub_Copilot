@@ -1,0 +1,49 @@
+relationship 104b3b30-7838-4c10-82e7-811c439af49c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SalesOrderDetail.ModifiedDate
+	toColumn: LocalDateTable_4b2ab78a-fe09-42eb-bde0-72ff2988b3a7.Date
+
+relationship 8971741e-3a5f-489b-8d55-f09624b3f5fc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Query.startTimestamp
+	toColumn: LocalDateTable_6d0c1205-6ad5-4ac6-b10b-8f9cdea57bf3.Date
+
+relationship d1bfab0e-775a-4d84-910e-4e9a9ba631b2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Query.endTimestamp
+	toColumn: LocalDateTable_3a8f59c8-66de-4e9a-8761-99f352a3cfb5.Date
+
+relationship 4a319973-e1f6-4d28-851a-3624cc189815
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Query.'Current Date'
+	toColumn: LocalDateTable_9eebd657-e8dd-47ba-b4dd-9318e82c77ba.Date
+
+relationship b21bf392-244c-4808-8db5-36065b03e1fc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Query.'Invoice Base Date'
+	toColumn: LocalDateTable_47154012-0ea6-40a4-9f3b-5b722a9d3176.Date
+
+relationship 8313ee25-6c5f-4fa7-9183-a5863359168d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Query.'Invoice Due Date'
+	toColumn: LocalDateTable_a8a2a74f-3651-431a-b10e-5a7ce5bfdde3.Date
+
+relationship e4d995a8-5ec3-412c-a3ef-00bfc5d3fb55
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Sheet1.Date
+	toColumn: LocalDateTable_b739702b-0833-456d-871a-fea944e43863.Date
+
+relationship 6ced4ba2-83fc-4d52-9b76-037613ddcc40
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Sales.OrderDate
+	toColumn: LocalDateTable_2e74884a-ee99-41d9-9f85-25c35085c4fd.Date
+
+relationship AutoDetected_a7b069ea-cceb-4d2f-aa12-f389adc23d0d
+	fromColumn: Sales.ProductKey
+	toColumn: Product.ProductKey
+
+relationship 73bbd734-2304-4136-9aaf-d44c90b2a8a3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Sales_product.OrderDate
+	toColumn: LocalDateTable_67534dbc-2a9d-4b90-ac8c-743d96648a96.Date
+

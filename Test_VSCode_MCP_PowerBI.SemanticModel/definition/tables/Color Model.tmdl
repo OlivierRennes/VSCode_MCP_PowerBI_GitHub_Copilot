@@ -1,0 +1,61 @@
+table 'Color Model'
+	lineageTag: 8a6c189d-df7b-4aae-93b5-14e2cb4d5ae9
+
+	column Black
+		dataType: double
+		lineageTag: 2762472a-cd51-4dc5-b17b-e8b6d8da51ca
+		summarizeBy: sum
+		sourceColumn: Black
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Blue
+		dataType: double
+		lineageTag: 07593e03-cac2-4c52-b7f4-86d03fb77c7a
+		summarizeBy: sum
+		sourceColumn: Blue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Red
+		dataType: double
+		lineageTag: d0472ac7-e081-44e9-ac0e-547511e50f8a
+		summarizeBy: sum
+		sourceColumn: Red
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column White
+		dataType: double
+		lineageTag: 8315eaf7-a73a-4758-a41d-f6535b2b2e48
+		summarizeBy: sum
+		sourceColumn: White
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Color Model' = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("C:\Téléchargements\Formation Power BI\Product-Color-Model.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Color Model", Kind = "Sheet"]}[Data],
+				  #"Type de colonne changé" = Table.TransformColumnTypes(#"Navigation 1", {{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}, "fr"),
+				    #"Colonnes supprimées" = Table.RemoveColumns(#"Type de colonne changé",{"Column1"}),
+				    #"En-têtes promus" = Table.PromoteHeaders(#"Colonnes supprimées", [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"Color", type text}, {"Model", type text}}),
+				    #"Colonne dynamique" = Table.Pivot(#"Type modifié", List.Distinct(#"Type modifié"[Color]), "Color", "Model", List.Count)
+				in
+				    #"Colonne dynamique"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

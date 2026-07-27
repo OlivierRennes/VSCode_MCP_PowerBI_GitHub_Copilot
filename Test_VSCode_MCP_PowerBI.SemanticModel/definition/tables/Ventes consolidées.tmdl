@@ -1,0 +1,86 @@
+table 'Ventes consolidées'
+	lineageTag: f26527dd-abf1-41fc-b7f2-1fd772d2e6f9
+
+	column SalesOrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b5eceb4-605d-4c4f-ac54-4d4aa3e1ba96
+		summarizeBy: count
+		sourceColumn: SalesOrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderDetailID
+		dataType: int64
+		formatString: 0
+		lineageTag: dd0f1ec8-97a8-4ed9-a781-db3f9dca1a1d
+		summarizeBy: count
+		sourceColumn: SalesOrderDetailID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderQty
+		dataType: int64
+		formatString: 0
+		lineageTag: 66449148-353a-48ca-b562-a57a9022825a
+		summarizeBy: sum
+		sourceColumn: OrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: e3f465a4-df46-4555-ad73-4f42073381dd
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: a1726c3c-f5ac-4e6f-a2eb-cc9ad48a75f3
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitPriceDiscount
+		dataType: int64
+		formatString: 0
+		lineageTag: 51bbf2f9-6f65-4edc-8316-9ecb91621172
+		summarizeBy: sum
+		sourceColumn: UnitPriceDiscount
+
+		annotation SummarizationSetBy = Automatic
+
+	column LineTotal
+		dataType: int64
+		formatString: 0
+		lineageTag: c2dd58c8-7645-4070-82bb-f5ead538ddb0
+		summarizeBy: sum
+		sourceColumn: LineTotal
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesDate
+		dataType: string
+		lineageTag: 44edb80d-4743-4e2d-850e-5a35f62b78c8
+		summarizeBy: none
+		sourceColumn: SalesDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Ventes consolidées' = m
+		mode: import
+		source =
+				let
+				    Source = Table.Combine({AdventureWorksSales, OtherSales})
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

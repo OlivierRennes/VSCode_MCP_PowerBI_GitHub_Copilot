@@ -1,0 +1,125 @@
+table SalesOrderDetail
+	lineageTag: 1a9c919c-dfc4-4aa6-be60-284e1b0b655e
+
+	/// Montant total calculé dynamiquement : Quantité × Prix unitaire × (1 - Taux de remise)
+	measure 'Total Ligne' = SUMX(SalesOrderDetail, SalesOrderDetail[OrderQty] * SalesOrderDetail[UnitPrice] * (1 - SalesOrderDetail[UnitPriceDiscount]))
+		formatString: #,##0.00 €
+		displayFolder: Mesures
+		lineageTag: 434b691e-3b56-4d2e-a424-e3870537baf2
+
+	/// Identifiant unique de la commande de vente (clé étrangère vers la table Commande)
+	column SalesOrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: 71f63aeb-d1ee-4c7d-9c80-0eab09677604
+		summarizeBy: none
+		sourceColumn: SalesOrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifiant unique de la ligne de détail de commande (clé primaire)
+	column SalesOrderDetailID
+		dataType: int64
+		formatString: 0
+		lineageTag: 38c7e155-8b1b-47d8-9466-167eb54d5309
+		summarizeBy: none
+		sourceColumn: SalesOrderDetailID
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quantité de produits commandés sur cette ligne
+	column OrderQty
+		dataType: int64
+		formatString: 0
+		lineageTag: af438e1a-02bb-4aa9-ad0b-f1747aaedc28
+		summarizeBy: sum
+		sourceColumn: OrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifiant du produit commandé (clé étrangère vers la table Produit)
+	column ProductID
+		dataType: int64
+		formatString: 0
+		lineageTag: e9d79364-a110-459f-9699-f571343baa0e
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Prix unitaire du produit au moment de la commande (en euros)
+	column UnitPrice
+		dataType: double
+		formatString: #,##0.00 €
+		lineageTag: f1117979-43a4-4462-84a6-fbd676996573
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Taux de remise appliqué sur le prix unitaire (ex: 0.10 = 10%)
+	column UnitPriceDiscount
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 04093d13-7fe7-4dab-9936-98fc54eeac92
+		summarizeBy: none
+		sourceColumn: UnitPriceDiscount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Montant total de la ligne = Quantité × Prix unitaire × (1 - Remise)
+	column LineTotal
+		dataType: double
+		formatString: #,##0.00 €
+		lineageTag: 3f507cdb-2038-4d6a-b289-fab657b63905
+		summarizeBy: sum
+		sourceColumn: LineTotal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Identifiant technique interne (GUID SQL Server) — usage interne uniquement
+	column rowguid
+		dataType: string
+		isHidden
+		lineageTag: 5f7074f2-a4a9-4284-a465-fe967014f451
+		summarizeBy: none
+		sourceColumn: rowguid
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Date de dernière modification de la ligne de commande
+	column ModifiedDate
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 5a0799f0-3ec3-4a41-9894-06362cd045fd
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		variation Variation
+			isDefault
+			relationship: 104b3b30-7838-4c10-82e7-811c439af49c
+			defaultHierarchy: LocalDateTable_4b2ab78a-fe09-42eb-bde0-72ff2988b3a7.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sheet1 = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("C:\Téléchargements\Formation Power BI\SalesOrderDetail.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Sheet1", Kind = "Sheet"]}[Data],
+				  #"En-têtes promus" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Type de colonne changé" = Table.TransformColumnTypes(#"En-têtes promus", {{"SalesOrderID", Int64.Type}, {"SalesOrderDetailID", Int64.Type}, {"OrderQty", Int64.Type}, {"ProductID", Int64.Type}, {"UnitPrice", type number}, {"UnitPriceDiscount", type number}, {"LineTotal", type number}, {"rowguid", type text}, {"ModifiedDate", type datetime}}, "fr")
+				in
+				  #"Type de colonne changé"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

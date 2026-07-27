@@ -1,0 +1,87 @@
+table AdventureWorksSales
+	lineageTag: 3d9838d0-3df8-42d9-9e56-cfd9650e4eb1
+
+	column SalesOrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: 77478b1e-235d-41a0-91c3-b920d9feb30d
+		summarizeBy: count
+		sourceColumn: SalesOrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderDetailID
+		dataType: int64
+		formatString: 0
+		lineageTag: 900cd39b-93a0-4099-971f-798ce3d30f32
+		summarizeBy: count
+		sourceColumn: SalesOrderDetailID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderQty
+		dataType: int64
+		formatString: 0
+		lineageTag: 03a17339-d902-43d6-b6d4-0e22db1f9624
+		summarizeBy: sum
+		sourceColumn: OrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: 7979041e-fa02-4d81-9f11-d52fe65b128b
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: 1969f810-58bc-4f90-bee0-75815ab2afc2
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitPriceDiscount
+		dataType: int64
+		formatString: 0
+		lineageTag: 05c9d021-18fa-46fa-9645-569f81fa1acb
+		summarizeBy: sum
+		sourceColumn: UnitPriceDiscount
+
+		annotation SummarizationSetBy = Automatic
+
+	column LineTotal
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e53f930-eecd-47ef-8962-6708ab621037
+		summarizeBy: sum
+		sourceColumn: LineTotal
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesDate
+		dataType: string
+		lineageTag: 3c1d8a7a-f301-4bd3-8970-4a0d15216929
+		summarizeBy: none
+		sourceColumn: SalesDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AdventureWorksSales = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("C:\Téléchargements\Formation Power BI\AdventureWorksSales.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "AdventureWorksSales", Kind = "Sheet"]}[Data],
+				  #"En-têtes promus" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Type de colonne changé" = Table.TransformColumnTypes(#"En-têtes promus", {{"SalesOrderID", Int64.Type}, {"SalesOrderDetailID", Int64.Type}, {"OrderQty", Int64.Type}, {"ProductName", type text}, {"UnitPrice", type number}, {"UnitPriceDiscount", Int64.Type}, {"LineTotal", Int64.Type}, {"SalesDate", type text}}, "fr")
+				in
+				  #"Type de colonne changé"
+
+	annotation PBI_ResultType = Table
+

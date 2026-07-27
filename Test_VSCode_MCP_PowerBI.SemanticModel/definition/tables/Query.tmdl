@@ -1,0 +1,251 @@
+table Query
+	lineageTag: 8e7cc9d2-77f2-4c5c-9f82-8cd62383f49b
+
+	column Location
+		dataType: string
+		lineageTag: 18e6f933-a76b-48a3-a846-926a4483eb73
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Role
+		dataType: string
+		lineageTag: e258ee40-802c-418d-8e74-fa229b8ca460
+		summarizeBy: none
+		sourceColumn: Role
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vendor NR'
+		dataType: string
+		lineageTag: f924ae69-da13-40ea-a8c3-9c231671c4be
+		summarizeBy: none
+		sourceColumn: Vendor NR
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Value'
+		dataType: double
+		lineageTag: 6d223332-b9fc-4921-8c58-7a264df7870d
+		summarizeBy: sum
+		sourceColumn: Invoice Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Resource
+		dataType: string
+		lineageTag: 7ad29261-f3ed-4577-8318-910a5107798e
+		summarizeBy: none
+		sourceColumn: Resource
+
+		annotation SummarizationSetBy = Automatic
+
+	column startTimestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d310736a-21a6-4ecc-9152-37efffdb7a94
+		summarizeBy: none
+		sourceColumn: startTimestamp
+
+		variation Variation
+			isDefault
+			relationship: 8971741e-3a5f-489b-8d55-f09624b3f5fc
+			defaultHierarchy: LocalDateTable_6d0c1205-6ad5-4ac6-b10b-8f9cdea57bf3.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	column endTimestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e45961ca-eedd-4961-aea0-154d8dd82200
+		summarizeBy: none
+		sourceColumn: endTimestamp
+
+		variation Variation
+			isDefault
+			relationship: d1bfab0e-775a-4d84-910e-4e9a9ba631b2
+			defaultHierarchy: LocalDateTable_3a8f59c8-66de-4e9a-8761-99f352a3cfb5.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	column caseId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3473b0a6-63f1-4b79-a028-6f50a9a5c6d1
+		summarizeBy: count
+		sourceColumn: caseId
+
+		annotation SummarizationSetBy = Automatic
+
+	column activityName
+		dataType: string
+		lineageTag: 94e3df75-3d45-4eab-8148-919f8eae763e
+		summarizeBy: none
+		sourceColumn: activityName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CompCode
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f634748-d1dd-4a9e-8ef8-3be06c5ac96c
+		summarizeBy: count
+		sourceColumn: CompCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendor
+		dataType: string
+		lineageTag: 594d4caf-2466-4178-9fe7-84b1d94e69d2
+		summarizeBy: none
+		sourceColumn: Vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Material type'
+		dataType: string
+		lineageTag: e94b57e4-c6f9-4f4d-8a9c-650ef458c70b
+		summarizeBy: none
+		sourceColumn: Material type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cash (discount %)'
+		dataType: double
+		lineageTag: 8eeaa459-e24a-468d-b81f-7ff58f14da42
+		summarizeBy: sum
+		sourceColumn: Cash (discount %)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Current Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 27877a60-4159-4c67-80e8-b39975b64c54
+		summarizeBy: none
+		sourceColumn: Current Date
+
+		variation Variation
+			isDefault
+			relationship: 4a319973-e1f6-4d28-851a-3624cc189815
+			defaultHierarchy: LocalDateTable_9eebd657-e8dd-47ba-b4dd-9318e82c77ba.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Net Order Value Normalized'
+		dataType: double
+		lineageTag: 68a37df8-61b6-47f5-ab8d-cc3a6ff859dd
+		summarizeBy: sum
+		sourceColumn: Net Order Value Normalized
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Cash (discount Days)'
+		dataType: double
+		lineageTag: 56188c2d-9f8e-49a9-9a1c-aaf7d9856191
+		summarizeBy: sum
+		sourceColumn: Cash (discount Days)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Invoice Base Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d791d8f8-8ec3-4499-b550-6364959fd997
+		summarizeBy: none
+		sourceColumn: Invoice Base Date
+
+		variation Variation
+			isDefault
+			relationship: b21bf392-244c-4808-8db5-36065b03e1fc
+			defaultHierarchy: LocalDateTable_47154012-0ea6-40a4-9f3b-5b722a9d3176.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Due Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e7d2c37f-df67-4ce1-9c05-19cbfe9ed404
+		summarizeBy: none
+		sourceColumn: Invoice Due Date
+
+		variation Variation
+			isDefault
+			relationship: 8313ee25-6c5f-4fa7-9183-a5863359168d
+			defaultHierarchy: LocalDateTable_a8a2a74f-3651-431a-b10e-5a7ce5bfdde3.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: a0b0594b-8988-41b1-bbc5-8d38b7a7742b
+		summarizeBy: count
+		sourceColumn: Invoice ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Planned delivery time in days'
+		dataType: int64
+		formatString: 0
+		lineageTag: a91c854f-9d04-4192-a7ad-9ab595c44006
+		summarizeBy: sum
+		sourceColumn: Planned delivery time in days
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cash (discount Days) 2'
+		dataType: double
+		lineageTag: 5b0134d9-3c9b-4328-901d-8768aa0b26bf
+		summarizeBy: sum
+		sourceColumn: Cash (discount Days) 2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Cash (discount %) 2'
+		dataType: double
+		lineageTag: 900580c5-bf2e-4a00-9d07-c2b0721ac6e9
+		summarizeBy: sum
+		sourceColumn: Cash (discount %) 2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Prompt Payment'
+		dataType: double
+		lineageTag: 78f1aafd-7b92-4011-bc85-4cd126b97dab
+		summarizeBy: sum
+		sourceColumn: Prompt Payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Query = m
+		mode: import
+		source =
+				let
+				  Source = PowerPlatform.Dataflows([]),
+				  #"Navigation 1" = Source{[Id = "Environments"]}[Data],
+				  #"Navigation 2" = #"Navigation 1"{[groupId = "c1cfa076-0937-e5e6-8c6c-56527fb8a74f"]}[Data],
+				  #"Navigation 3" = #"Navigation 2"{[dataflowId = "f1a1c9cd-4706-4493-8858-12d538a491ec"]}[Data],
+				  #"Navigation 4" = #"Navigation 3"{[entity = "Query"]}[Data]
+				in
+				  #"Navigation 4"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

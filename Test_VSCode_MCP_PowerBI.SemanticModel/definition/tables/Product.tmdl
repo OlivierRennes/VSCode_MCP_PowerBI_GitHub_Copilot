@@ -1,0 +1,86 @@
+table Product
+	lineageTag: 6fba45c4-db73-4299-8117-50f38d096c9c
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 400a11a2-ec9b-4ba6-8fa0-27fb1edf65d8
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 74cd13d9-52be-4fc9-bb38-17d8d9048367
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Standard Cost'
+		dataType: double
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 2fa5dcbd-f302-48c6-9033-305774b44315
+		summarizeBy: none
+		sourceColumn: Standard Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Color
+		dataType: string
+		lineageTag: c47c76b6-7729-4553-8626-60495b1a43f4
+		summarizeBy: none
+		sourceColumn: Color
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subcategory
+		dataType: string
+		lineageTag: 412fe230-5c1b-48c6-87d3-fe7ad8241271
+		summarizeBy: none
+		sourceColumn: Subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: e1a5013b-c788-4cf8-86e4-cfdf17e8011f
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Background Color Format'
+		dataType: string
+		lineageTag: f005b346-0ef5-4b59-b769-b10662bf59b9
+		summarizeBy: none
+		sourceColumn: Background Color Format
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Font Color Format'
+		dataType: string
+		lineageTag: 0f40904c-2304-4ede-b92f-e266c2c02fd3
+		summarizeBy: none
+		sourceColumn: Font Color Format
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Product = m
+		mode: import
+		source =
+				let
+				  Source = Excel.Workbook(File.Contents("C:\Téléchargements\Formation Power BI\Product.xlsx"), null, true),
+				  #"Navigation 1" = Source{[Item = "Product", Kind = "Sheet"]}[Data],
+				  #"En-têtes promus" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Type de colonne changé" = Table.TransformColumnTypes(#"En-têtes promus", {{"ProductKey", Int64.Type}, {"Product", type text}, {"Standard Cost", type number}, {"Color", type text}, {"Subcategory", type text}, {"Category", type text}, {"Background Color Format", type text}, {"Font Color Format", type text}}, "fr")
+				in
+				  #"Type de colonne changé"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
