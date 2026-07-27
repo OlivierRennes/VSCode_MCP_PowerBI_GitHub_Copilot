@@ -1,0 +1,32 @@
+Here's how to use it:
+
+✅ Agent Created Successfully
+
+Your  pbip-analyzer  custom agent is now registered with Copilot CLI. You can invoke it with:
+
+/agent pbip-analyzer
+
+Or use specific commands like:
+
+/pbip-analyzer analyze                    # Analyse complète du modèle
+/pbip-analyzer optimize                   # Recommandations de performance
+/pbip-analyzer generate-table "..."       # Génère code TMDL
+/pbip-analyzer validate                   # Valide syntaxe + références
+
+📋 What's Configured
+
+The agent includes:
+
+• TMDL Analysis: Parse Power BI PBIP structures
+• DAX Optimization: Performance tuning & vectorization
+• Power Query (M): Query folding & native SQL
+• Validation: Syntax checking & anti-patterns
+• Code Generation: Tables, measures, partitions, hierarchies
+
+🚀 Next Steps
+
+1. Switch to the agent:
+/agent pbip-analyzer
+2. Try a command (e.g., on a PBIP project):
+/pbip-analyzer analyze
+3. Or just ask questions — the agent will handle Power BI PBIP tasks automatically.
